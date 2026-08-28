@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>فتح التطبيق</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+(function () {
+  function q(name) {
+    try { return new URLSearchParams(window.location.search).get(name) || ""; } catch (e) { return ""; }
+  }
+  var url = q("url");
+  var title = q("title");
+  var time = q("time") || "0";
+  if (url) {
+    var scheme = "almidyaa://track?url=" + encodeURIComponent(url) +
+                 "&title=" + encodeURIComponent(title) +
+                 "&time=" + encodeURIComponent(time);
+    document.getElementById("open-btn").href = scheme;
+    document.getElementById("params").textContent = title || "التلاوة";
+    setTimeout(function () {
+      window.location.replace(scheme);
+    }, 300);
+  } else {
+    document.getElementById("msg").textContent = "رابط غير صالح";
+  }
+})();
+</script>
+<style>
+body { font-family: sans-serif; background: #121212; color: #f5efe0; text-align: center; padding: 40px 16px; }
+h1 { color: #f2c14e; font-size: 22px; }
+a.btn { display: inline-block; margin-top: 18px; padding: 14px 32px; background: #f2c14e; color: #000; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 18px; }
+p { color: #b5ac98; font-size: 15px; }
+</style>
+</head>
+<body>
+<h1>تراث الشيخ المنشاوي</h1>
+<p id="params">جارٍ فتح التطبيق...</p>
+<p id="msg">إذا لم يُفتح التطبيق تلقائيًا، اضغط الزر بالأسفل.</p>
+<a class="btn" id="open-btn" href="almidyaa://track">فتح التطبيق</a>
+</body>
+</html>
