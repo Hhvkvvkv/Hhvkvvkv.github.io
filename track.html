@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<title>فتح التطبيق</title>
+<title>تراث الشيخ المنشاوي</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>
 (function () {
@@ -12,31 +12,35 @@
   var url = q("url");
   var title = q("title");
   var time = q("time") || "0";
-  if (url) {
+  function openApp() {
+    if (!url) { document.getElementById("msg").textContent = "رابط غير صالح"; return; }
     var scheme = "almidyaa://track?url=" + encodeURIComponent(url) +
                  "&title=" + encodeURIComponent(title) +
                  "&time=" + encodeURIComponent(time);
-    document.getElementById("open-btn").href = scheme;
-    document.getElementById("params").textContent = title || "التلاوة";
-    setTimeout(function () {
-      window.location.replace(scheme);
-    }, 300);
-  } else {
-    document.getElementById("msg").textContent = "رابط غير صالح";
+    window.location.href = scheme;
   }
+  window.onload = function () {
+    document.getElementById("open-btn").onclick = openApp;
+    if (url) {
+      document.getElementById("params").textContent = title || "التلاوة";
+      setTimeout(openApp, 400);
+    } else {
+      document.getElementById("msg").textContent = "رابط غير صالح";
+    }
+  };
 })();
 </script>
 <style>
 body { font-family: sans-serif; background: #121212; color: #f5efe0; text-align: center; padding: 40px 16px; }
 h1 { color: #f2c14e; font-size: 22px; }
-a.btn { display: inline-block; margin-top: 18px; padding: 14px 32px; background: #f2c14e; color: #000; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 18px; }
+button.btn { margin-top: 18px; padding: 14px 32px; background: #f2c14e; color: #000; border: none; border-radius: 30px; font-weight: bold; font-size: 18px; cursor: pointer; display: inline-block; }
 p { color: #b5ac98; font-size: 15px; }
 </style>
 </head>
 <body>
 <h1>تراث الشيخ المنشاوي</h1>
 <p id="params">جارٍ فتح التطبيق...</p>
-<p id="msg">إذا لم يُفتح التطبيق تلقائيًا، اضغط الزر بالأسفل.</p>
-<a class="btn" id="open-btn" href="almidyaa://track">فتح التطبيق</a>
+<p id="msg">إذا لم يُفتح التطبيق تلقائيًا، اضغط الزر.</p>
+<button class="btn" id="open-btn">فتح التطبيق</button>
 </body>
 </html>
